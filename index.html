@@ -1,0 +1,109 @@
+<!doctype html>
+
+<head>
+
+  <title>Personal Travis</title>
+  
+  <script src="lib/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
+  <script src="lib/ydn-db/ydn.db-isw-core-qry.js" type="text/javascript"></script>
+  <script src="lib/metrojs/MetroJs.lt.js" type="text/javascript"></script>
+  <script src="lib/html5sql/html5sql.js" type="text/javascript"></script>
+  <script src="lib/uniformjs/jquery.uniform.js"></script>
+  
+  <script src="phonegap.js"></script>
+  <script src="GAPlugin.js"></script><!-- FIXME: Am I necessary? -->
+  
+  <script src="js/strings.js" type="text/javascript"></script>
+  <script src="js/functions.js" type="text/javascript"></script>
+  <script src="js/main.js" type="text/javascript"></script>
+  
+  <link href="lib/metrojs/MetroJs.lt.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" href="lib/uniformjs/themes/agent/css/uniform.agent.css" media="screen" />
+  <link href="style.css" type="text/css" rel="stylesheet" />
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  
+</head>
+
+<body>
+  <div class="tools">
+    <!--
+      <img class="navi-icon" src="img/navi-icons/stats.png" />
+      <img class="navi-icon" src="img/navi-icons/settings.png" />
+      <img class="navi-icon" src="img/navi-icons/help.png" />
+    -->
+    <img class="navi-icon" src="img/navi-icons/edit.png" onclick="printCurrentLevel()" />
+    <span class="sub-title"><script>document.write(string.nextWorkout);</script></span>
+  </div>
+  <p class="app-title"><script>document.write(string.personalTravis);</script></p>
+  <div id="first-level-view">
+		<!-------------------------------------------->
+		<div class="wrap">
+			<div class="box" onclick="printWorkout(1)">
+				<div class="box-inner">
+					<div class="tiles">
+						<div class="live-tile" data-mode="flip" data-initdelay="8000" id="tile-1">
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-1-front.png" /></div></div>
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-1-back.png" /></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box" onclick="printWorkout(2)">
+				<div class="box-inner">
+					<div class="tiles">
+						<div class="live-tile" data-mode="flip" data-initdelay="8500" id="tile-2">
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-2-front.png" /></div></div>
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-2-back.png" /></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box" onclick="printWorkout(3)">
+				<div class="box-inner">
+					<div class="tiles">
+						<div class="live-tile" data-mode="flip" data-initdelay="9000" id="tile-3">
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-3-front.png" /></div></div>
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-3-back.png" /></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box" onclick="printWorkout(4)">
+				<div class="box-inner">
+					<div class="tiles">
+						<div class="live-tile" data-mode="flip" data-initdelay="9500" id="tile-4">
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-4-front.png" /></div></div>
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-4-back.png" /></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box" onclick="printWorkout(5)">
+				<div class="box-inner">
+					<div class="tiles">
+						<div class="live-tile" data-mode="flip" data-initdelay="10000" id="tile-5">
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-5-front.png" /></div></div>
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-5-back.png" /></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box" onclick="printWorkout(6)">
+				<div class="box-inner">
+					<div class="tiles">
+						<div class="live-tile" data-mode="flip" data-initdelay="10500" id="tile-6">
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-6-front.png" /></div></div>
+							<div class="tile-face"><div class="tile-content"><img src="img/main-menu-trainee-icons/icon-training-6-back.png" /></div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+  </div>
+  <div id="second-level-view"></div>
+  <img src="img/loading.gif" id="loading" />
+</body>
