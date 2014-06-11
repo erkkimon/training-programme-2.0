@@ -31,7 +31,10 @@ function onDeviceReady()
 
 function onBackKeyDown() 
 {
+  if(workoutBeingViewed != 0)
+  {
     rememberWorkout(workoutBeingViewed);
+  }
 }
 
 function successHandler() // for gaPlugin
