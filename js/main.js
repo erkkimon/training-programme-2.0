@@ -3,6 +3,24 @@ var gaPlugin;
 document.addEventListener("deviceready", onDeviceReady, false);
 document.addEventListener("backbutton", onBackKeyDown, false);
 
+///////////////////
+// MAIN ACTIVITY //
+///////////////////
+
+$(document).ready(function() 
+{
+	$(".live-tile").liveTile();
+	//localStorage.removeItem("launchCounter"); // for debugging
+	checkLaunchCounter();
+	initFirstLevelView();
+	if (parseInt(localStorage.getItem("launchCounter")) == 1)
+	{
+	  firstLaunch();
+	}
+	suggestNextWorkout();
+	$("#loading").fadeOut("slow");
+});
+
 function onDeviceReady() 
 {
   gaPlugin = window.plugins.gaPlugin;
@@ -11,8 +29,9 @@ function onDeviceReady()
   gaPlugin.exit(nativePluginResultHandler, nativePluginErrorHandler);
 }
 
-function onBackKeyDown() {
-    alert("back pressed");
+function onBackKeyDown() 
+{
+    rememberWorkout(workoutBeingViewed);
 }
 
 function successHandler() // for gaPlugin

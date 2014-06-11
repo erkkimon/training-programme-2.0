@@ -1,8 +1,14 @@
+//////////////
+// STATUSES //
+//////////////
+
+var editMode = false;
+var workoutBeingViewed = 0;
+
 ///////////////
 // VARIABLES //
 ///////////////
 
-var editMode = false;
 var db = new ydn.db.Storage('personal-travis-db');
 
 var interval = 
@@ -266,6 +272,7 @@ function initFirstLevelView()
   suggestNextWorkout();
   fromDatabaseToObjects(); 
   console.log("Data read from database to objects");
+  workoutBeingViewed = 0;
 }
 
 function printCurrentLevel()
@@ -356,6 +363,7 @@ function printExercise(exerciseName)
 
 function printWorkout(workoutNo)
 {
+	workoutBeingViewed = workoutNo;
 	fromDatabaseToObjects();
 	$("#second-level-view").html
 	(
@@ -542,24 +550,6 @@ function writeRecord(exerciseName, weight, reps, exclude)
   var now = currYear +"-"+ currMonth +"-"+ currDay;
 	db.put(exerciseName, {weight: weight, reps: reps, exclude: exclude}, now);
 }
-
-///////////////////
-// MAIN ACTIVITY //
-///////////////////
-
-$(document).ready(function() 
-{
-	$(".live-tile").liveTile();
-	//localStorage.removeItem("launchCounter"); // for debugging
-	checkLaunchCounter();
-	initFirstLevelView();
-	if (parseInt(localStorage.getItem("launchCounter")) == 1)
-	{
-	  firstLaunch();
-	}
-	suggestNextWorkout();
-	$("#loading").fadeOut("slow");
-});
 
 ////////////////////////
 // HTML5SQL FUNCTIONS //
