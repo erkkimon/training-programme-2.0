@@ -9,8 +9,10 @@ var workoutBeingViewed = 0;
 // VARIABLES //
 ///////////////
 
+// Let's call the database object "db"
 var db = new ydn.db.Storage('personal-travis-db');
 
+// How much is the weight increased per exercise
 var interval = 
 {
   benchpress: 5,
@@ -33,6 +35,8 @@ var interval =
   powerclean: 5
 }
 
+// All the exercises have a corresponding object with data such as
+// reps amount, weight amount, reached boolean, interval amount, etc.
 var benchpress            = new exerciseObject("benchpress");
 var inclinepress          = new exerciseObject("inclinepress");
 var lyingtricepsextension = new exerciseObject("lyingtricepsextension");
@@ -80,6 +84,7 @@ var exercises =
 
 function exerciseObject(exerciseName)
 {
+	// "adjusted" is a status which changes when editMode() is toggled on
 	this.name = exerciseName;
 	this.reps = 0;
 	this.weight = 0;
@@ -115,6 +120,8 @@ function exerciseObject(exerciseName)
 ///////////////
 // FUNCTIONS //
 ///////////////
+
+// The functions are ordered alphabetically
 
 function checkLaunchCounter()
 {
@@ -160,7 +167,7 @@ function firstLaunch()
 	$("#second-level-view").html("<div class=tools'><span class='sub-title' style='margin-right: 4%; margin-top: 2%;'>" + string.wait + "</span></div>");
   setTimeout(function() { alert(string.welcome); }, 1000);
 	$("#second-level-view").fadeIn("fast");
-  //setTimeout(function() { ifWebSqlDBExists(readFromWebsqlToObjects()); }, 1000);
+  // This is really terrible solution done in a hurry. No setTimeout() should be used.
   setTimeout(function() { printCurrentLevel(); console.log("printtasinkurrentinlevelin"); }, 10000);
 }
 
@@ -207,6 +214,9 @@ function getWeight(exercise)
 
 function goalMinus(exerciseName)
 {
+
+  // This function is used for calculating the previous goal
+
   var newGoal =
   {
     reps: 100,
@@ -234,6 +244,9 @@ function goalMinus(exerciseName)
 
 function goalPlus(exerciseName)
 {
+  
+  // This function is used for calculating the next goal
+  
   var newGoal =
   {
     reps: 100,
@@ -256,12 +269,18 @@ function goalPlus(exerciseName)
 
 function goalToUI(exerciseName, newGoal)
 {
+  
+  // If we want print new goal to the UI/DOM, we use this function
+  
   $("#"+exerciseName+"-weight").html(parseFloat(newGoal.weight));
   $("#"+exerciseName+"-reps").html(parseInt(newGoal.reps));
 }
 
 function initFirstLevelView()
 {
+  
+  // This function shows the "default" view and does some magic 
+  
   $("#second-level-view").fadeOut("slow");
   $(".sub-title").html(string.nextWorkout);
   for (var i in exercises) 
@@ -277,9 +296,12 @@ function initFirstLevelView()
 
 function printCurrentLevel()
 {
+	
+	// This function prints the bulk edit mode.
+	
 	$(".sub-title").html(string.wait);
 	$("#second-level-view").fadeIn("fast");
-	$('#loading').css('opacity', '1.0');
+	$('#loading').css('opacity', '1.0'); // doesn't work well
 	$("#second-level-view").html
 	(
 	  "<div class='tools'>" +
@@ -299,8 +321,7 @@ function printCurrentLevel()
   	var tempReps = exercises[i].reps;
   	var tempWeight = exercises[i].weight;
   	$("#bulk-edit-mode-container").append
-	  (
-	    		
+	  (    		
       "<div style='height: 60px; width: 98%; padding: 3%; padding-left: 0px; margin: 0px; margin-bottom: 30px; font-size: 6px; border: 1px solid #FFF; border-bottom: 0px; border-left: 0px;'>" +
       "  <div style='float: right;'>" +
       "    <select id='" + weightTarget + "' style='width: 80px;'></select><br />" +
@@ -329,8 +350,8 @@ function printCurrentLevel()
       $("#" + repsTarget).val(tempReps).change();
     }
 	}
-	$('select').uniform();
-	$("#loading").fadeOut("fast");
+	$('select').uniform(); // form elements styling using UniformJS
+	$("#loading").fadeOut("fast"); // doesn't work well
 }
 
 function printExercise(exerciseName)
@@ -427,7 +448,7 @@ function printWorkout(workoutNo)
 			break;
 	}
 	$("#second-level-view").fadeIn("slow");
-	$('input').uniform();
+	$('input').uniform(); // form elements styling using UniformJS
 }
 
 function readExerciseFromDB(exerciseName)
@@ -481,6 +502,9 @@ function saveRecords()
 
 function suggestNextWorkout()
 {
+  
+  // This function colors one of the tiles in the "default" view
+  
   var thisWorkout;
   var lastWorkout = localStorage.getItem("lastWorkout");
   if (lastWorkout === null)
@@ -496,6 +520,9 @@ function suggestNextWorkout()
 
 function toggleReached(exerciseName)
 {
+  
+  // If the user reaches a goal, he ticks the checkbox i.e. toggles this variable
+  
   if (exerciseName.reached == false)
   {
     exerciseName.updateReached(true);
@@ -510,6 +537,9 @@ function toggleReached(exerciseName)
 
 function writeDefaultData()
 {
+	
+	// These are the default values to be written in the database
+	
 	/* benchpress = pena, inclinepress = vinopena, lyingtricepsextension = ranskis */
 	writeRecord("benchpress", 30, 10, true);
 	writeRecord("inclinepress", 20, 10, true);
@@ -543,17 +573,28 @@ function writeDefaultData()
 
 function writeRecord(exerciseName, weight, reps, exclude)
 {
+
+  // This function writes weights and reps in the database
+  
+  // Generate timestamp and place it in "now" variable
   var d = new Date();
   var currDay = ('0'+(d.getDate())).slice(-2);
   var currMonth = ('0'+(d.getMonth()+1)).slice(-2);
   var currYear = d.getFullYear();
   var now = currYear +"-"+ currMonth +"-"+ currDay;
+  
+  // We use "exclude" if the database record should be excluded from statistics,
+  // and in practice this is used when the user adjusts his/her goal.
+  // Adjusting goal higher doesn't make higher goal reached, so it must be
+  // excluded when showing a progression graph.
 	db.put(exerciseName, {weight: weight, reps: reps, exclude: exclude}, now);
 }
 
 ////////////////////////
 // HTML5SQL FUNCTIONS //
 ////////////////////////
+
+// Probably all html5sql/WebSQL functions below should be deleted, when it's time
 
 function openWebsqlDB()
 {

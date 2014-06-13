@@ -31,7 +31,7 @@ if (!lang && navigator)
 	lang = lang.substr(0, 2);
 }
 
-//lang = "fi";
+//lang = "fi"; // Override language detection with this variable, used for debugging
 var string;
 
 if (lang == "fi") /* FINNISH */

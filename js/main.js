@@ -1,5 +1,9 @@
 var gaPlugin;
 
+///////////////
+// LISTENERS //
+///////////////
+
 document.addEventListener("deviceready", onDeviceReady, false);
 document.addEventListener("backbutton", onBackKeyDown, false);
 
@@ -21,6 +25,10 @@ $(document).ready(function()
 	$("#loading").fadeOut("slow");
 });
 
+///////////////////////////////////
+// FUNCTIONS CALLED BY LISTENERS //
+///////////////////////////////////
+
 function onDeviceReady() 
 {
   gaPlugin = window.plugins.gaPlugin;
@@ -36,6 +44,10 @@ function onBackKeyDown()
     rememberWorkout(workoutBeingViewed);
   }
 }
+
+////////////////////////////
+// DEBUG MESSAGE HANDLERS //
+////////////////////////////
 
 function successHandler() // for gaPlugin
 {
